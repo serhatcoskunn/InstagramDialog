@@ -3,6 +3,7 @@ package com.ahe.instagramdialog
 import android.app.Dialog
 import android.app.PendingIntent.getActivity
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,10 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
+
+import android.view.WindowManager
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,61 +51,66 @@ class MainActivity : AppCompatActivity() {
         dialog.setContentView(R.layout.dialog_task_tepmlate)
         dialog.setCancelable(false)
 
+        dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val lp = dialog.window.attributes
+        lp.dimAmount = 0.9f
+        dialog.window.attributes = lp
+
         mChart= dialog.findViewById(R.id.chart1)
 
 
 
 
 
-        mChart!!.setUsePercentValues(true);
-        mChart!!.getDescription().setEnabled(false);
+        mChart!!.setUsePercentValues(true)
+        mChart!!.description.isEnabled = false
         mChart!!.setExtraOffsets(5f, 10f, 5f, 5f)
-        mChart!!.setDragDecelerationFrictionCoef(0.95f);
+        mChart!!.dragDecelerationFrictionCoef = 0.95f
 
         //mChart.setCenterTextTypeface(mTfLight);
         //mChart.setCenterText(generateCenterSpannableText());
 
-        mChart!!.setDrawHoleEnabled(true);
-        mChart!!.setHoleColor(Color.WHITE);
+        mChart!!.isDrawHoleEnabled = true
+        mChart!!.setHoleColor(Color.WHITE)
 
-        mChart!!.setTransparentCircleColor(Color.WHITE);
-        mChart!!.setTransparentCircleAlpha(110);
+        mChart!!.setTransparentCircleColor(Color.WHITE)
+        mChart!!.setTransparentCircleAlpha(110)
 
-        mChart!!.setHoleRadius(58f);
-        mChart!!.setTransparentCircleRadius(61f);
+        mChart!!.holeRadius = 58f
+        mChart!!.transparentCircleRadius = 61f
 
-        mChart!!.setDrawCenterText(true);
+        mChart!!.setDrawCenterText(true)
 
-        mChart!!.setRotationAngle(0f);
+        mChart!!.rotationAngle = 0f
         // enable rotation of the chart by touch
-        mChart!!.setRotationEnabled(true);
-        mChart!!.setHighlightPerTapEnabled(true);
+        mChart!!.isRotationEnabled = true
+        mChart!!.isHighlightPerTapEnabled = true
 
-        // mChart.setUnit(" €");
-        // mChart.setDrawUnitsInChart(true);
+        // mChart.setUnit(" €")
+        // mChart.setDrawUnitsInChart(true)
 
         // add a selection listener
-        //mChart!!.setOnChartValueSelectedListener(this@MainActivity);
+        //mChart!!.setOnChartValueSelectedListener(this@MainActivity)
 
-        setData(4, 100f);
+        setData(4, 100f)
 
-        //mChart.animateY(1400, Easing.EaseInOutQuad);
-        // mChart.spin(2000, 0, 360);
+        //mChart.animateY(1400, Easing.EaseInOutQuad)
+        // mChart.spin(2000, 0, 360)
 
 
-        var l: Legend = mChart!!.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
-        l.setXEntrySpace(7f);
-        l.setYEntrySpace(0f);
-        l.setYOffset(0f);
+        var l: Legend = mChart!!.legend
+        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        l.orientation = Legend.LegendOrientation.VERTICAL
+        l.setDrawInside(false)
+        l.xEntrySpace = 7f
+        l.yEntrySpace = 0f
+        l.yOffset = 0f
 
         // entry label styling
-        mChart!!.setEntryLabelColor(Color.WHITE);
-        //mChart.setEntryLabelTypeface(mTfRegular);
-        mChart!!.setEntryLabelTextSize(12f);
+        mChart!!.setEntryLabelColor(Color.WHITE)
+        //mChart.setEntryLabelTypeface(mTfRegular)
+        mChart!!.setEntryLabelTextSize(12f)
 
 
 
@@ -244,47 +254,47 @@ class MainActivity : AppCompatActivity() {
         for (/*int i = 0; i < count ; i++*/i in  0..count) {
             entries.add( PieEntry( ((Math.random() * mult) + mult / 5).toFloat(),
                     mParties[i % mParties.size],
-                    getResources().getDrawable(R.mipmap.ic_launcher)));
+                    resources.getDrawable(R.mipmap.ic_launcher)))
         }
 
-        var dataSet =  PieDataSet(entries, "Election Results");
+        var dataSet =  PieDataSet(entries, "Election Results")
 
-        dataSet.setDrawIcons(false);
+        dataSet.setDrawIcons(false)
 
-        dataSet.setSliceSpace(3f);
-        dataSet.setIconsOffset( MPPointF(0f, 40f));
-        dataSet.setSelectionShift(5f);
+         dataSet.sliceSpace = 3f
+         dataSet.iconsOffset = MPPointF(0f, 40f)
+         dataSet.selectionShift = 5f
 
         // add a lot of colors
 
-        var colors = ArrayList<Integer>();
+        var colors = ArrayList<Integer>()
 
         for ( c in ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c as Integer)
 
         for ( c in ColorTemplate.JOYFUL_COLORS)
-            colors.add(c as Integer);
+            colors.add(c as Integer)
 
         for (c in ColorTemplate.COLORFUL_COLORS)
-            colors.add(c as Integer);
+            colors.add(c as Integer)
 
         for ( c in ColorTemplate.LIBERTY_COLORS)
-            colors.add(c as Integer);
+            colors.add(c as Integer)
 
         for ( c in ColorTemplate.PASTEL_COLORS)
-            colors.add(c as Integer);
+            colors.add(c as Integer)
 
-        colors.add(ColorTemplate.getHoloBlue() as Integer);
+        colors.add(ColorTemplate.getHoloBlue() as Integer)
 
-        dataSet.setColors(colors as ArrayList<Int>);
-        dataSet.setSelectionShift(0f);
+         dataSet.colors = colors as ArrayList<Int>
+         dataSet.selectionShift = 0f
 
-        var data =  PieData(dataSet);
-        data.setValueFormatter( PercentFormatter());
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
-        //data.setValueTypeface(mTfLight);
-        mChart!!.setData(data);
+        var data =  PieData(dataSet)
+        data.setValueFormatter( PercentFormatter())
+        data.setValueTextSize(11f)
+        data.setValueTextColor(Color.WHITE)
+        //data.setValueTypeface(mTfLight)
+         mChart!!.data = data
 
         // undo all highlights
         mChart!!.highlightValues(null)

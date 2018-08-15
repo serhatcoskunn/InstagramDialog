@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.app.PendingIntent.getActivity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,8 +24,8 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 
 import android.view.WindowManager
-
-
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import kotlinx.android.synthetic.main.dialog_task_tepmlate.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -92,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         // add a selection listener
         //mChart!!.setOnChartValueSelectedListener(this@MainActivity)
 
-        setData(4, 100f)
+        setData(20, 100f)
 
         //mChart.animateY(1400, Easing.EaseInOutQuad)
         // mChart.spin(2000, 0, 360)
@@ -298,6 +299,26 @@ class MainActivity : AppCompatActivity() {
 
         // undo all highlights
         mChart!!.highlightValues(null)
+
+
+
+         mChart!!.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+             override fun onGlobalLayout() {
+                 if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                     mChart!!!!.viewTreeObserver.removeGlobalOnLayoutListener(this);
+                 } else {
+                     mChart!!!!.viewTreeObserver.removeOnGlobalLayoutListener(this);
+                 }
+
+                 val locations = IntArray(2)
+                 mChart!!!!.getLocationOnScreen(locations)
+                 val x = locations[0]
+                 val y = locations[1]
+
+                 Log.d("konum","$x $y")
+             }
+         })
+
 
         mChart!!.invalidate()
     }

@@ -16,11 +16,8 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.github.mikephil.charting.charts.PieChart
-import android.widget.SeekBar
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -92,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
         mChart!!.setUsePercentValues(true)
         mChart!!.description.isEnabled = false
-        mChart!!.setExtraOffsets(5f, 10f, 5f, 5f)
+        mChart!!.setExtraOffsets(20f, 10f, 5f, 5f)
         mChart!!.dragDecelerationFrictionCoef = 0.95f
 
         //mChart.setCenterTextTypeface(mTfLight);
@@ -120,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         // add a selection listener
         //mChart!!.setOnChartValueSelectedListener(this@MainActivity)
 
-        setData(20, 100f)
+        setData(10, 100f)
 
         //mChart.animateY(1400, Easing.EaseInOutQuad)
         // mChart.spin(2000, 0, 360)
@@ -128,10 +125,13 @@ class MainActivity : AppCompatActivity() {
 
         var l: Legend = mChart!!.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
         l.orientation = Legend.LegendOrientation.VERTICAL
         l.setDrawInside(false)
-        l.xEntrySpace = 7f
+        //l.xEntrySpace = 7f
+        //l.yEntrySpace = 0f
+        //l.yOffset = 0f
+        l.xEntrySpace = 0f
         l.yEntrySpace = 0f
         l.yOffset = 0f
 
@@ -274,7 +274,7 @@ class MainActivity : AppCompatActivity() {
 
         var mult:Float = range
 
-        var entries =  ArrayList<PieEntry>();
+        var entries =  ArrayList<PieEntry>()
          val mParties = arrayOf("Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H", "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P", "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X", "Party Y", "Party Z")
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
@@ -319,7 +319,7 @@ class MainActivity : AppCompatActivity() {
 
         var data =  PieData(dataSet)
         data.setValueFormatter( PercentFormatter())
-        data.setValueTextSize(11f)
+        data.setValueTextSize(5f)
         data.setValueTextColor(Color.WHITE)
         //data.setValueTypeface(mTfLight)
          mChart!!.data = data
@@ -413,13 +413,23 @@ class MainActivity : AppCompatActivity() {
         if(buttonLeft<x && x<buttonRight && buttonTop<y && y<buttonBottom)
         {
             Log.d("OLDU","OLDU")
+            buttonTest!!.setBackgroundColor(Color.GRAY)
             var v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                v.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
+                v.vibrate(VibrationEffect.createOneShot(100,VibrationEffect.DEFAULT_AMPLITUDE))
             }else
             {
-                v.vibrate(500);
+                v.vibrate(100)
             }
+
+            if(ev.action==MotionEvent.ACTION_UP)
+            {
+                Toast.makeText(buttonTest!!.context,  "Doldur",Toast.LENGTH_SHORT).show()
+            }
+        }
+        else
+        {
+            buttonTest!!.setBackgroundColor(Color.LTGRAY)
         }
 
         return super.dispatchTouchEvent(ev)

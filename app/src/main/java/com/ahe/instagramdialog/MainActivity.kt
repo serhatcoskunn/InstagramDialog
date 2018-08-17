@@ -3,8 +3,10 @@ package com.ahe.instagramdialog
 import android.app.Dialog
 import android.app.PendingIntent.getActivity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
@@ -36,15 +38,19 @@ class MainActivity : AppCompatActivity() {
     var mChart: PieChart?=null
     var buttonTest: Button?=null
     var dialog: Dialog?=null
+    var blurrDialog: Dialog?=null
 
-    var globalX=0
-    var globalY=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
+        var buttonSecond=findViewById<Button>(R.id.buttonSecond)
+        buttonSecond.setOnClickListener{
+            var intent=Intent(this,SecondActivity::class.java)
+            startActivity(intent)
 
+        }
 
 
 
@@ -55,16 +61,19 @@ class MainActivity : AppCompatActivity() {
 
         var textView=findViewById<TextView>(R.id.textView)
 
-        dialog= Dialog(this@MainActivity)
+        dialog= Dialog(this@MainActivity/*,R.style.Theme_D1NoTitleDim*/)
         dialog!!.setContentView(R.layout.dialog_task_tepmlate)
         dialog!!.setCancelable(false)
+        blurrDialog= Dialog(this,android.R.style.Theme_Translucent_NoTitleBar)
+
+
 
         //dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        //val lp = dialog.window.attributes
+        //val lp = dialog!!.window.attributes
         //lp.dimAmount = 0.9f
-        //dialog.window.attributes = lp
+        //dialog!!.window.attributes = lp
 
-        mChart= dialog!!.findViewById(R.id.chart1)
+        mChart= dialog!!.findViewById<PieChart>(R.id.chart1)
         buttonTest= dialog!!.findViewById(R.id.buttonTest)
 
 
@@ -89,11 +98,11 @@ class MainActivity : AppCompatActivity() {
 
         mChart!!.setUsePercentValues(true)
         mChart!!.description.isEnabled = false
-        mChart!!.setExtraOffsets(20f, 10f, 5f, 5f)
+        mChart!!.setExtraOffsets(0f, 5f, 0f, 10f)
         mChart!!.dragDecelerationFrictionCoef = 0.95f
 
         //mChart.setCenterTextTypeface(mTfLight);
-        //mChart.setCenterText(generateCenterSpannableText());
+        mChart!!.centerText="BOŞ ZAMAN\n5.5"
 
         mChart!!.isDrawHoleEnabled = true
         mChart!!.setHoleColor(Color.WHITE)
@@ -117,21 +126,25 @@ class MainActivity : AppCompatActivity() {
         // add a selection listener
         //mChart!!.setOnChartValueSelectedListener(this@MainActivity)
 
-        setData(10, 100f)
+        setData(1, 100f)
 
-        //mChart.animateY(1400, Easing.EaseInOutQuad)
-        // mChart.spin(2000, 0, 360)
+        //mChart!!.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+        mChart!!.spin(2000, 0f, 360f,Easing.EasingOption.EaseInOutQuad)
 
 
         var l: Legend = mChart!!.legend
-        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        /*l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
         l.orientation = Legend.LegendOrientation.VERTICAL
-        l.setDrawInside(false)
+        l.setDrawInside(false)*/
+        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        l.orientation = Legend.LegendOrientation.HORIZONTAL
+        l.setDrawInside(true)
         //l.xEntrySpace = 7f
         //l.yEntrySpace = 0f
         //l.yOffset = 0f
-        l.xEntrySpace = 0f
+        l.xEntrySpace = 7f
         l.yEntrySpace = 0f
         l.yOffset = 0f
 
@@ -197,11 +210,18 @@ class MainActivity : AppCompatActivity() {
 
                 if(event.action==MotionEvent.ACTION_DOWN)
                 {
+                    val map = Utils.takeScreenShot(this@MainActivity)
+
+                    val fast = BlurBuilder.blur(this@MainActivity,map)
+                    val draw = BitmapDrawable(resources, fast)
+                    blurrDialog!!.window.setBackgroundDrawable(draw)
+                    blurrDialog!!.show()
                     dialog!!.show()
                     Log.d("GESTURE ", "göster")
                 }
                 else if(event.action==MotionEvent.ACTION_UP)
                 {
+                    blurrDialog!!.dismiss()
                     dialog!!.dismiss()
                     Log.d("GESTURE ", "kaldır")
                 }
@@ -275,7 +295,7 @@ class MainActivity : AppCompatActivity() {
         var mult:Float = range
 
         var entries =  ArrayList<PieEntry>()
-         val mParties = arrayOf("Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H", "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P", "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X", "Party Y", "Party Z")
+         val mParties = arrayOf("Tamamlanan", "Eksik", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H", "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P", "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X", "Party Y", "Party Z")
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
@@ -285,7 +305,8 @@ class MainActivity : AppCompatActivity() {
                     resources.getDrawable(R.mipmap.ic_launcher)))
         }
 
-        var dataSet =  PieDataSet(entries, "Election Results")
+        //var dataSet =  PieDataSet(entries, "Election Results")
+        var dataSet =  PieDataSet(entries, "")
 
         dataSet.setDrawIcons(false)
 
@@ -297,7 +318,7 @@ class MainActivity : AppCompatActivity() {
 
         var colors = ArrayList<Integer>()
 
-        for ( c in ColorTemplate.VORDIPLOM_COLORS)
+        /*for ( c in ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c as Integer)
 
         for ( c in ColorTemplate.JOYFUL_COLORS)
@@ -310,7 +331,10 @@ class MainActivity : AppCompatActivity() {
             colors.add(c as Integer)
 
         for ( c in ColorTemplate.PASTEL_COLORS)
-            colors.add(c as Integer)
+            colors.add(c as Integer)*/
+
+         colors.add(Color.parseColor("#228b22") as Integer)
+         colors.add(Color.parseColor("#ff0000")as Integer)
 
         colors.add(ColorTemplate.getHoloBlue() as Integer)
 
@@ -319,7 +343,7 @@ class MainActivity : AppCompatActivity() {
 
         var data =  PieData(dataSet)
         data.setValueFormatter( PercentFormatter())
-        data.setValueTextSize(5f)
+        data.setValueTextSize(10f)
         data.setValueTextColor(Color.WHITE)
         //data.setValueTypeface(mTfLight)
          mChart!!.data = data
@@ -329,7 +353,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-         mChart!!.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+         /*mChart!!.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
              override fun onGlobalLayout() {
                  if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                      mChart!!!!.viewTreeObserver.removeGlobalOnLayoutListener(this);
@@ -344,7 +368,7 @@ class MainActivity : AppCompatActivity() {
 
                  //Log.d("konum","$x $y")
              }
-         })
+         })*/
 
 
         mChart!!.invalidate()
@@ -414,13 +438,14 @@ class MainActivity : AppCompatActivity() {
         {
             Log.d("OLDU","OLDU")
             buttonTest!!.setBackgroundColor(Color.GRAY)
-            var v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            /*var v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 v.vibrate(VibrationEffect.createOneShot(100,VibrationEffect.DEFAULT_AMPLITUDE))
             }else
             {
                 v.vibrate(100)
-            }
+            }*/
+            vibrate(100)
 
             if(ev.action==MotionEvent.ACTION_UP)
             {
@@ -433,5 +458,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.dispatchTouchEvent(ev)
+    }
+
+    fun vibrate(time:Long)
+    {
+        var v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(time,VibrationEffect.DEFAULT_AMPLITUDE))
+        }else
+        {
+            v.vibrate(100)
+        }
+    }
+
+    fun createPieGraph()
+    {
+
     }
 }

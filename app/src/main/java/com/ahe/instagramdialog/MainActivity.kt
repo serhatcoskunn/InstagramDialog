@@ -45,6 +45,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+
+        var v =  findViewById(R.id.progressBar2) as ProgressBar
+        v.getIndeterminateDrawable().setColorFilter(0xfffff.toInt(), android.graphics.PorterDuff.Mode.SRC_ATOP);
+
+
+
         var buttonSecond=findViewById<Button>(R.id.buttonSecond)
         buttonSecond.setOnClickListener{
             var intent=Intent(this,SecondActivity::class.java)
@@ -68,23 +74,14 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        //dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        //val lp = dialog!!.window.attributes
-        //lp.dimAmount = 0.9f
-        //dialog!!.window.attributes = lp
 
-        mChart= dialog!!.findViewById<PieChart>(R.id.chart1)
+
+        mChart= dialog!!.findViewById(R.id.chart1)
         buttonTest= dialog!!.findViewById(R.id.buttonTest)
 
 
 
-        /*buttonTest!!.setOnTouchListener(object :View.OnTouchListener{
-            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-                Log.d("YES","OLDU");
-                return false
-            }
 
-        })*/
 
 
 
@@ -126,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         // add a selection listener
         //mChart!!.setOnChartValueSelectedListener(this@MainActivity)
 
-        setData(1, 100f)
+        setData(30, 100f)
 
         //mChart!!.animateY(1400, Easing.EasingOption.EaseInOutQuad);
         mChart!!.spin(2000, 0f, 360f,Easing.EasingOption.EaseInOutQuad)
@@ -138,9 +135,9 @@ class MainActivity : AppCompatActivity() {
         l.orientation = Legend.LegendOrientation.VERTICAL
         l.setDrawInside(false)*/
         l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
         l.orientation = Legend.LegendOrientation.HORIZONTAL
-        l.setDrawInside(true)
+        l.setDrawInside(false)
         //l.xEntrySpace = 7f
         //l.yEntrySpace = 0f
         //l.yOffset = 0f
@@ -155,53 +152,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*var buttonCreateTemp : Button = dialog.findViewById(R.id.button_newTemp)
-        var buttonPreviousWeek : Button = dialog.findViewById(R.id.button_previousWeek)
-        var buttonCloseDialog : Button = dialog.findViewById(R.id.button_closeDialog)
-        var buttonSavedList : Button = dialog.findViewById(R.id.button_savedList)
-        buttonCreateTemp.setOnClickListener{
-            dialog.dismiss()
-        }
-
-        buttonPreviousWeek.setOnClickListener{
-
-            dialog.dismiss()
-        }
-        buttonSavedList.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        buttonCloseDialog.setOnClickListener{
-            dialog.dismiss()
-        }*/
 
 
         textView.setOnTouchListener(object :View.OnTouchListener{
@@ -318,7 +268,7 @@ class MainActivity : AppCompatActivity() {
 
         var colors = ArrayList<Integer>()
 
-        /*for ( c in ColorTemplate.VORDIPLOM_COLORS)
+        for ( c in ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c as Integer)
 
         for ( c in ColorTemplate.JOYFUL_COLORS)
@@ -331,10 +281,10 @@ class MainActivity : AppCompatActivity() {
             colors.add(c as Integer)
 
         for ( c in ColorTemplate.PASTEL_COLORS)
-            colors.add(c as Integer)*/
+            colors.add(c as Integer)
 
-         colors.add(Color.parseColor("#228b22") as Integer)
-         colors.add(Color.parseColor("#ff0000")as Integer)
+         //colors.add(Color.parseColor("#228b22") as Integer)
+         //colors.add(Color.parseColor("#ff0000")as Integer)
 
         colors.add(ColorTemplate.getHoloBlue() as Integer)
 
@@ -375,47 +325,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    /*override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        /*val x = event.x
-        val cc = getChildCount()
-        for (i in 0 until cc) {
-            val c = getChildView()
-            if (x > c.getLeft() && x < c.getRight()) {
-                return c.onTouchEvent(event)
-            }
-        }
-        return false*/
-        var x=event.x
-        var y=event.y
-
-        if(globalX<x && x<globalX+buttonTest!!.measuredWidth && globalY<y && y<globalY+buttonTest!!.measuredHeight)
-        {
-            //Toast.makeText(this@MainActivity,"YES",Toast.LENGTH_SHORT).show()
-            Log.d("YES","YES")
-        }
-
-
-
-        /*if(buttonTest!!.left<x+ (buttonTest!!.parent as View).left && x<buttonTest!!.right+ (buttonTest!!.parent as View).right && buttonTest!!.top<y+ (buttonTest!!.parent as View).top && y<buttonTest!!.bottom + (buttonTest!!.parent as View).bottom)
-        {
-            //Toast.makeText(this@MainActivity,"YES",Toast.LENGTH_SHORT).show()
-            Log.d("YES","YES")
-        }*/
-
-        var asd=buttonTest!!.parent
-
-       // Log.d("YES","YES ${buttonTest!!.left}   ${(buttonTest!!.parent as View).left}")
-        /*if(buttonTest!!.left<x+ (dialog!! as View).left && x<buttonTest!!.right && buttonTest!!.top<y && y<buttonTest!!.bottom)
-        {
-            //Toast.makeText(this@MainActivity,"YES",Toast.LENGTH_SHORT).show()
-            Log.d("YES","YES")
-        }*/
-
-
-        //mChart!!.left
-        //Log.d("dispatchTouchEvent","${event.action} left=${mChart!!.left} right=${mChart!!.right} top=${mChart!!.top} bottom=${mChart!!.bottom}")
-        return super.dispatchTouchEvent(event)
-    }*/
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
 
@@ -436,15 +345,8 @@ class MainActivity : AppCompatActivity() {
 
         if(buttonLeft<x && x<buttonRight && buttonTop<y && y<buttonBottom)
         {
-            Log.d("OLDU","OLDU")
             buttonTest!!.setBackgroundColor(Color.GRAY)
-            /*var v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                v.vibrate(VibrationEffect.createOneShot(100,VibrationEffect.DEFAULT_AMPLITUDE))
-            }else
-            {
-                v.vibrate(100)
-            }*/
+
             vibrate(100)
 
             if(ev.action==MotionEvent.ACTION_UP)
@@ -473,6 +375,51 @@ class MainActivity : AppCompatActivity() {
 
     fun createPieGraph()
     {
+        mChart!!.apply {
+            setUsePercentValues(true)
+            description.isEnabled = false
+            setExtraOffsets(0f, 5f, 0f, 10f)
+        }
+        mChart= dialog!!.findViewById<PieChart>(R.id.chart1)
+        mChart!!.setUsePercentValues(true)
+        mChart!!.description.isEnabled = false
+        mChart!!.setExtraOffsets(0f, 5f, 0f, 10f)
+        mChart!!.dragDecelerationFrictionCoef = 0.95f
+        mChart!!.centerText="BOŞ ZAMAN\n5.5"
+        mChart!!.isDrawHoleEnabled = true
+        mChart!!.setHoleColor(Color.WHITE)
+        mChart!!.setTransparentCircleColor(Color.WHITE)
+        mChart!!.setTransparentCircleAlpha(110)
+        mChart!!.holeRadius = 58f
+        mChart!!.transparentCircleRadius = 61f
+        mChart!!.setDrawCenterText(true)
 
+        mChart!!.rotationAngle = 0f
+        mChart!!.isRotationEnabled = true
+        mChart!!.isHighlightPerTapEnabled = true
+
+
+
+        setData(10, 200f)
+
+        mChart!!.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+        mChart!!.spin(2000, 0f, 360f,Easing.EasingOption.EaseInOutQuad)
+        var l: Legend = mChart!!.legend
+        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        l.orientation = Legend.LegendOrientation.HORIZONTAL
+        l.setDrawInside(true)
+        l.xEntrySpace = 7f
+        l.yEntrySpace = 0f
+        l.yOffset = 0f
+        mChart!!.setEntryLabelColor(Color.WHITE)
+        mChart!!.setEntryLabelTextSize(12f)
+    }
+
+    fun setUpGraphData()
+    {
+        
     }
 }
+
+

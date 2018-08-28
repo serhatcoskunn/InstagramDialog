@@ -1,5 +1,8 @@
 package com.ahe.instagramdialog
 
+import android.animation.AnimatorInflater
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.PendingIntent.getActivity
 import android.content.Context
@@ -18,6 +21,7 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewTreeObserver
+import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.animation.Easing
@@ -28,8 +32,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
-
-
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,9 +43,43 @@ class MainActivity : AppCompatActivity() {
     var dialog: Dialog?=null
     var blurrDialog: Dialog?=null
 
+    private var timer: Timer? = null
+
+    private var circleProgress: CircleProgress? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        circleProgress = findViewById(R.id.crc) as CircleProgress
+
+        timer =  Timer()
+        timer!!.schedule(object :TimerTask(){
+            @SuppressLint("ResourceType")
+            override fun run() {
+
+                val a = false
+                if (a) {
+                            /*var anim = ObjectAnimator.ofInt(circleProgress, "", 0, 10)
+                            var anim = ObjectAnimator.ofInt(circleProgress,"asd",0,10)
+                            anim.setInterpolator( DecelerateInterpolator());
+                            anim.setDuration(500);
+                            anim.start();*/
+                        }
+                else {
+                    var set = AnimatorInflater.loadAnimator(this@MainActivity, R.anim.progress_anim);
+                    set.setInterpolator( DecelerateInterpolator());
+                    set.setTarget(circleProgress);
+                    set.start();
+                }
+
+
+            }
+
+        },0,2000)
+
+
 
 
 

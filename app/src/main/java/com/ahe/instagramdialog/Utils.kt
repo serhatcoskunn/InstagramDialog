@@ -2,6 +2,7 @@ package com.ahe.instagramdialog
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.support.v8.renderscript.Allocation
@@ -43,5 +44,15 @@ object  Utils {
         val b = Bitmap.createBitmap(b1, 0, /*statusBarHeight*/0, width, height /*- statusBarHeight*/)
         view.destroyDrawingCache()
         return b
+    }
+
+    fun dp2px(resources: Resources, dp: Float): Float {
+        val scale = resources.getDisplayMetrics().density
+        return dp * scale + 0.5f
+    }
+
+    fun sp2px(resources: Resources, sp: Float): Float {
+        val scale = resources.getDisplayMetrics().scaledDensity
+        return sp * scale
     }
 }

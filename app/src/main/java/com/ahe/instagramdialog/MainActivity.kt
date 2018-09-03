@@ -58,6 +58,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var test=Dialog(this/*,R.style.Theme_D1NoTitleDim*/)
+        test.setContentView(R.layout.test)
+        test.window.setBackgroundDrawableResource(android.R.color.transparent)
+        test.show()
 
         var buttonSecond=findViewById<Button>(R.id.buttonSecond)
         buttonSecond.setOnClickListener{
@@ -95,8 +99,8 @@ class MainActivity : AppCompatActivity() {
 
     fun createDialog()
     {
-        dialog = Dialog(this@MainActivity,R.style.Theme_D1NoTitleDim)
-        dialog!!.window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog = Dialog(this@MainActivity/*,R.style.Theme_D1NoTitleDim*/)
+        //dialog!!.window.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.dialog_task_tepmlate)
         dialog!!.setCancelable(false)
 

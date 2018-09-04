@@ -134,15 +134,15 @@ public class WaveProgress extends View {
         mMaxValue = typedArray.getFloat(R.styleable.WaveProgress_maxValue, Constant.DEFAULT_MAX_VALUE);
         mValue = typedArray.getFloat(R.styleable.WaveProgress_value, Constant.DEFAULT_VALUE);
         mValueSize = typedArray.getDimension(R.styleable.WaveProgress_valueSize, Constant.DEFAULT_VALUE_SIZE);
-        mValueColor = typedArray.getColor(R.styleable.WaveProgress_valueColor, Color.WHITE);
+        mValueColor = typedArray.getColor(R.styleable.WaveProgress_bgCircleColor, Color.LTGRAY);//typedArray.getColor(R.styleable.WaveProgress_valueColor, Color.WHITE);
 
         mHint = typedArray.getString(R.styleable.WaveProgress_hint);
         mHintColor = typedArray.getColor(R.styleable.WaveProgress_hintColor, Color.BLACK);
         mHintSize = typedArray.getDimension(R.styleable.WaveProgress_hintSize, Constant.DEFAULT_HINT_SIZE);
 
         mCircleWidth = typedArray.getDimension(R.styleable.WaveProgress_circleWidth, Constant.DEFAULT_ARC_WIDTH);
-        mCircleColor = typedArray.getColor(R.styleable.WaveProgress_circleColor, Color.GREEN);
-        mBgCircleColor = typedArray.getColor(R.styleable.WaveProgress_bgCircleColor, Color.WHITE);
+        mCircleColor = typedArray.getColor(R.styleable.WaveProgress_circleColor, /*Color.GREEN*/Color.parseColor("#3CB371"));
+        mBgCircleColor = typedArray.getColor(R.styleable.WaveProgress_bgCircleColor, Color.LTGRAY);//typedArray.getColor(R.styleable.WaveProgress_bgCircleColor, Color.WHITE);
 
         mWaveHeight = typedArray.getDimension(R.styleable.WaveProgress_waveHeight, Constant.DEFAULT_WAVE_HEIGHT);
         mWaveNum = typedArray.getInt(R.styleable.WaveProgress_waveNum, 1);
@@ -261,8 +261,8 @@ public class WaveProgress extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         drawCircle(canvas);
-        drawLightWave(canvas);
-        drawDarkWave(canvas);
+        //drawLightWave(canvas);
+        //drawDarkWave(canvas);
         drawProgress(canvas);
     }
 

@@ -1,13 +1,9 @@
 package com.ahe.instagramdialog
 
-import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import com.ahe.instagramdialog.CP.WaveProgress
-import com.ahe.instagramdialog.CP.DialProgress
-import com.ahe.instagramdialog.CP.CircleProgress
 import java.util.*
 
 
@@ -33,7 +29,7 @@ class Main3Activity : AppCompatActivity() ,View.OnClickListener  {
             R.id.dial_progress_bar->{
                 mDialProgress!!.setValue(mRandom!!.nextFloat() * mDialProgress!!.getMaxValue());
             }*/
-            R.id.wave_progress_bar->{
+            R.id.pb_graph->{
                 mWaveProgress!!.setValue(mRandom!!.nextFloat() * mWaveProgress!!.getMaxValue());
             }
 
@@ -61,7 +57,7 @@ class Main3Activity : AppCompatActivity() ,View.OnClickListener  {
         mCircleProgress2 = findViewById(R.id.circle_progress_bar2)
         mCircleProgress3 = findViewById(R.id.circle_progress_bar3)
         mDialProgress = findViewById(R.id.dial_progress_bar)*/
-        mWaveProgress = findViewById(R.id.wave_progress_bar)
+        mWaveProgress = findViewById(R.id.pb_graph)
 
         /*mBtnResetAll!!.setOnClickListener(this@Main3Activity)
         mCircleProgress1!!.setOnClickListener(this@Main3Activity)

@@ -17,7 +17,8 @@ public class Constant {
     public static final int DEFAULT_UNIT_SIZE = 30;
     public static final int DEFAULT_VALUE_SIZE = 15;
 
-    public static final int DEFAULT_ARC_WIDTH = 15;
+    //public static final int DEFAULT_ARC_WIDTH = 15;
+    public static final int DEFAULT_ARC_WIDTH = 25;
 
     public static final int DEFAULT_WAVE_HEIGHT = 40;
 }

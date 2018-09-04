@@ -1,40 +1,18 @@
 package com.ahe.instagramdialog
 
-import android.animation.Animator
-import android.animation.AnimatorInflater
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.app.Dialog
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.Log
-import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewTreeObserver
-import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import com.ahe.instagramdialog.CP.WaveProgress
-import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
-import com.github.mikephil.charting.utils.MPPointF
 import java.util.*
 
 
@@ -59,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         var test=Dialog(this/*,R.style.Theme_D1NoTitleDim*/)
-        test.setContentView(R.layout.test)
+        test.setContentView(R.layout.test2)
         test.window.setBackgroundDrawableResource(android.R.color.transparent)
         test.show()
 
@@ -100,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     fun createDialog()
     {
         dialog = Dialog(this@MainActivity/*,R.style.Theme_D1NoTitleDim*/)
-        //dialog!!.window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog!!.window.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.dialog_task_tepmlate)
         dialog!!.setCancelable(false)
 
@@ -110,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
 
         buttonTest= dialog!!.findViewById(R.id.buttonTest)
-        mWaveProgress = dialog!!.findViewById(R.id.wave_progress_bar)
+        mWaveProgress = dialog!!.findViewById(R.id.pb_graph)
         mRandom = Random()
         mWaveProgress!!.value=51f
 
@@ -146,7 +124,7 @@ class MainActivity : AppCompatActivity() {
             var y=ev.y
             if(buttonLeft<x && x<buttonRight && buttonTop<y && y<buttonBottom)
             {
-                buttonTest!!.setBackgroundColor(Color.GRAY)
+                buttonTest!!.setBackgroundResource(R.drawable.customclick)
                 if(!isPressed)
                 {
                     vibrate(100)
@@ -160,7 +138,7 @@ class MainActivity : AppCompatActivity() {
             else
             {
                 isPressed=false
-                buttonTest!!.setBackgroundColor(Color.LTGRAY)
+                buttonTest!!.setBackgroundResource(R.drawable.customclickiki)
             }
 
         }

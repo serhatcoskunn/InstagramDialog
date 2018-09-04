@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">InstagramDialog</string>
+    <string name="text">"<b>8</b> saatlik işin <b>4</b> saatini tamamladın.\n Geri kalanı tamamlansın mı?"</string>
 </resources>

@@ -98,7 +98,7 @@
             app:valueSize="@dimen/text_size_35" />
 
         <com.ahe.instagramdialog.CP.WaveProgress
-            android:id="@+id/wave_progress_bar"
+            android:id="@+id/pb_graph"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center_horizontal"
